@@ -45,7 +45,7 @@ void Mesh::createCube(float size) {
     float h = size / 2.0f;
     
     glm::vec3 positions[] = {
-        glm::vec3(-h, -h,  h.h), glm::vec3( h, -h,  h), glm::vec3( h,  h,  h), glm::vec3(-h,  h,  h),
+        glm::vec3(-h, -h,  h), glm::vec3( h, -h,  h), glm::vec3( h,  h,  h), glm::vec3(-h,  h,  h),
         glm::vec3(-h, -h, -h), glm::vec3(-h,  h, -h), glm::vec3( h,  h, -h), glm::vec3( h, -h, -h),
         glm::vec3(-h,  h, -h), glm::vec3(-h,  h,  h), glm::vec3( h,  h,  h), glm::vec3( h,  h, -h),
         glm::vec3(-h, -h, -h), glm::vec3( h, -h, -h), glm::vec3( h, -h,  h), glm::vec3(-h, -h,  h),
