@@ -5,15 +5,16 @@
   "description": "A Roblox-like game engine",
   "dependencies": [
     "spdlog",
-    "sdl3",
+    "sdl2",
     "glew",
     "glm",
     "entt",
     "sol2",
     "lua",
     "enet",
-    "imgui[glfw-binding,opengl3-binding]",
-    "nlohmann-json"
+    "imgui[sdl2-binding,opengl3-binding]",
+    "nlohmann-json",
+    "stb"
   ],
-  "builtin-baseline": "latest"
+  "builtin-baseline": "a1e74d1225d4b5d18f6a8ce4168f6c4d7244afc6"
 }
