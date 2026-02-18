@@ -14,9 +14,10 @@
     "enet",
     {
       "name": "imgui",
-      "features": ["sdl2-binding", "opengl3-binding"]
+      "features": ["glfw-binding", "opengl3-binding"]
     },
     "nlohmann-json",
-    "stb"
+    "stb",
+    "glfw3"
   ]
 }
