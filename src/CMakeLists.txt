@@ -7,6 +7,8 @@ add_executable(roblox-clone
     renderer/Window.cpp
     renderer/Shader.cpp
     renderer/Mesh.cpp
+    renderer/Texture.cpp
+    renderer/Material.cpp
     scene/Scene.cpp
     scene/Entity.cpp
     scripting/ScriptEngine.cpp
@@ -27,11 +29,13 @@ endif()
 target_include_directories(roblox-clone PRIVATE
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src
+    ${SDL2_INCLUDE_DIRS}
 )
 
 target_link_libraries(roblox-clone PRIVATE
     spdlog::spdlog
-    SDL3::SDL3
+    SDL2::SDL2
+    SDL2::SDL2main
     GLEW::GLEW
     OpenGL::GL
     glm::glm
@@ -39,10 +43,22 @@ target_link_libraries(roblox-clone PRIVATE
     sol2::sol2
     Lua::Lua
     enet::enet
-    ImGui::ImGui
+    imgui::imgui
     nlohmann_json::nlohmann_json
 )
 
-if(ROBLOX_CLONE_BUILD_EDITOR)
-    target_link_libraries(roblox-clone PRIVATE ImGui::ImGui)
+if(WIN32)
+    target_link_libraries(roblox-clone PRIVATE
+        opengl32
+        glu32
+    )
 endif()
+
+if(ROBLOX_CLONE_BUILD_EDITOR)
+    target_link_libraries(roblox-clone PRIVATE imgui::imgui)
+endif()
+
+target_compile_definitions(roblox-clone PRIVATE
+    $<$<CONFIG:DEBUG>:DEBUG>
+    $<$<CONFIG:RELEASE>:NDEBUG>
+)
