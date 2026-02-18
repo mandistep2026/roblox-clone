@@ -1,5 +1,8 @@
 #include "Renderer.hpp"
 #include "core/Logger.hpp"
+#include "scene/Scene.hpp"
+#include "scene/Entity.hpp"
+#include <entt/entt.hpp>
 
 #ifdef ROBLOX_CLONE_BUILD_EDITOR
 #include "editor/Editor.hpp"
@@ -68,7 +71,12 @@ void Renderer::render(scene::Scene* scene) {
     m_basicShader->setMat4("view", view);
     
     if (scene) {
-        scene->each([this](entt::entity entity, TransformComponent& transform) {
+        auto& registry = scene->registry();
+        auto view = registry.view<scene::TransformComponent>();
+        
+        for (auto entity : view) {
+            auto& transform = view.get<scene::TransformComponent>(entity);
+            
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, transform.position);
             model = glm::rotate(model, glm::radians(transform.rotation.x), glm::vec3(1, 0, 0));
@@ -78,7 +86,7 @@ void Renderer::render(scene::Scene* scene) {
             
             m_basicShader->setMat4("model", model);
             m_testCube->draw();
-        });
+        }
     }
     
     m_basicShader->unbind();
