@@ -1,8 +1,10 @@
 #include "Editor.hpp"
 #include "Viewport.hpp"
 #include "core/Logger.hpp"
-#include <imgui_impl_sdl3.h>
+#include <imgui.h>
+#include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
+#include <SDL.h>
 
 namespace roblox_clone::editor {
 
@@ -27,8 +29,8 @@ bool Editor::initialize(renderer::Window* window, renderer::Renderer* renderer) 
     
     setupStyle();
     
-    if (!ImGui_ImplSDL3_InitForOpenGL(window->getHandle(), window->getNativeHandle())) {
-        RC_ERROR("Failed to initialize ImGui SDL3 backend");
+    if (!ImGui_ImplSDL2_InitForOpenGL(window->getHandle(), window->getNativeHandle())) {
+        RC_ERROR("Failed to initialize ImGui SDL2 backend");
         return false;
     }
     
@@ -53,7 +55,7 @@ void Editor::shutdown() {
     m_viewport.reset();
     
     ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplSDL3_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
     
     m_initialized = false;
@@ -61,7 +63,7 @@ void Editor::shutdown() {
 
 void Editor::beginFrame() {
     ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 }
 
@@ -203,21 +205,22 @@ void Editor::renderSceneHierarchy(scene::Scene* scene) {
     ImGui::Separator();
     
     if (scene) {
-        auto view = scene->view<scene::NameComponent, scene::TransformComponent>();
+        auto view = scene->registry().view<scene::NameComponent>();
         for (auto entity : view) {
             auto& name = scene->registry().get<scene::NameComponent>(entity);
             
             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf;
-            if (m_selectedEntity == scene::Entity{entity, scene}) {
+            if (m_selectedEntity == scene::Entity(entity, scene)) {
                 flags |= ImGuiTreeNodeFlags_Selected;
             }
             
-            if (ImGui::TreeNodeEx(reinterpret_cast<void*>(static_cast<intptr_t>(entity)), flags, "%s", name.name.c_str())) {
+            if (ImGui::TreeNodeEx(reinterpret_cast<void*>(static_cast<intptr_t>(static_cast<uint32_t>(entity))), 
+                                  flags, "%s", name.name.c_str())) {
                 ImGui::TreePop();
             }
             
             if (ImGui::IsItemClicked()) {
-                m_selectedEntity = scene::Entity{entity, scene};
+                m_selectedEntity = scene::Entity(entity, scene);
             }
         }
     }
