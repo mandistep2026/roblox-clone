@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "roblox-clone",
+  "version": "0.1.0",
+  "description": "A Roblox-like game engine",
+  "dependencies": [
+    "spdlog",
+    "sdl3",
+    "glew",
+    "glm",
+    "entt",
+    "sol2",
+    "lua",
+    "enet",
+    "imgui[glfw-binding,opengl3-binding]",
+    "nlohmann-json"
+  ],
+  "builtin-baseline": "latest"
+}
