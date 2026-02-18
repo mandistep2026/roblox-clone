@@ -18,6 +18,5 @@
     },
     "nlohmann-json",
     "stb"
-  ],
-  "builtin-baseline": "a1e74d1225d4b5d18f6a8ce4168f6c4d7244afc6"
+  ]
 }
