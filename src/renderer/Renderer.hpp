@@ -3,10 +3,11 @@
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "Mesh.hpp"
-#include "scene/Scene.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
+
+namespace roblox_clone::scene { class Scene; }
 
 #ifdef ROBLOX_CLONE_BUILD_EDITOR
 namespace roblox_clone::editor { class Editor; }
