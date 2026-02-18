@@ -1,5 +1,6 @@
 #include "Viewport.hpp"
 #include <imgui.h>
+#include <SDL.h>
 
 namespace roblox_clone::editor {
 
