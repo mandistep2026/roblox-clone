@@ -1,14 +1,13 @@
 #pragma once
 
-#include "renderer/Window.hpp"
 #include "renderer/Renderer.hpp"
 #include "scene/Scene.hpp"
 #include <imgui.h>
 #include <memory>
 
-namespace roblox_clone::editor {
+namespace roblox_clone::editor { class Viewport; }
 
-class Viewport;
+namespace roblox_clone::editor {
 
 class Editor {
 public:
